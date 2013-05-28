@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"><![endif]-->
+<!--[if IE 7]>   <html class="no-js lt-ie9 lt-ie8"><![endif]-->
+<!--[if IE 8]>   <html class="no-js lt-ie9"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+	<head>
+		<meta charset="utf-8">
+
+		<title></title>
+
+		<meta name="description" content="">
+		<meta name="viewport" content="width=device-width">
+
+		<link rel="stylesheet" href="normalize.css">
+		<link rel="stylesheet" href="main.css">
+	</head>
+
+	<body>
+		<script src="jquery-1.10.0.min.js"></script>
+		<script src="jquery.slicr.js"></script>
+
+		<script>
+			$(function() {
+				$('body').slicr({
+					algorithm: 'goldenRatio',
+					levels: 3,
+					onFinish: function() {
+						$('.slice-content').each(function() {
+
+							var content = $(this);
+							var index = Math.floor(Math.random() * 10) + 1;
+
+							content.css('background-image', 'url(http://lorempixel.com/800/800/city/' + index + '/)');
+						});
+					}
+				});
+			});
+		</script>
+	</body>
+</html>

@@ -1,0 +1,24 @@
+* {
+	-webkit-box-sizing: border-box;
+	   -moz-box-sizing: border-box;
+	        box-sizing: border-box;
+}
+
+html,
+body {
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+body {
+	border: 1px solid #fff;
+	border-width: 1px 0 0 1px;
+}
+
+.slice-content {
+	background-size: cover;
+	background-position: center;
+
+	border: 1px solid #fff;
+	border-width: 0 1px 1px 0;
+}
