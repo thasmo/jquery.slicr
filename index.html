@@ -24,6 +24,12 @@
 				$('body').slicr({
 					algorithm: 'goldenRatio',
 					levels: 3,
+					beforeSlicing: function(slice, level) {
+						console.log(slice, level);
+					},
+					afterSlicing: function(slice, slices, level) {
+						console.log(slice, slices, level);
+					},
 					onFinish: function() {
 						$('.slice-content').each(function() {
 

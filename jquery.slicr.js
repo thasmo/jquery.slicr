@@ -13,7 +13,9 @@
 			levels: 4,
 
 			// callbacks
-			onFinish: function() {}
+			onFinish: function() {},
+			beforeSlicing: function(slice, level) {},
+			afterSlicing: function(slice, slices, level) {}
 	    };
 
 	// The actual plugin constructor
@@ -39,10 +41,20 @@
 		buildSlices: function(slice) {
 
 			var plugin = this;
-			var newSlices = plugin.getSlices(slice);
 			var extraLevel = Math.round(Math.random());
+			var newSlices;
 
+			// increase level
 			this.level++;
+
+			// call before slicing callback
+			this.settings.beforeSlicing(slice, this.level);
+
+			// get new slices
+			newSlices = plugin.getSlices(slice);
+
+			// call after slicing callback
+			this.settings.afterSlicing(slice, newSlices, this.level);
 
 			// going in, MORE slices!
 			if(this.level < (this.settings.levels + extraLevel)) {
@@ -58,10 +70,11 @@
 				});
 			}
 
-			this.level--;
-
 			// append new slices
 			slice.append(newSlices);
+
+			// decrease level
+			this.level--;
 		},
 
 		// calculate new slices
