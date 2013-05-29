@@ -15,7 +15,10 @@
 			// callbacks
 			onFinish: function() {},
 			beforeSlicing: function(slice, level) {},
-			afterSlicing: function(slice, slices, level) {}
+			afterSlicing: function(slice, slices, level) {},
+
+			// overrides
+			appendSlices: null
 	    };
 
 	// The actual plugin constructor
@@ -71,7 +74,11 @@
 			}
 
 			// append new slices
-			slice.append(newSlices);
+			if(typeof this.settings.appendSlices == 'function') {
+				this.settings.appendSlices(slice, newSlices, this.level);
+			} else {
+				slice.append(newSlices);
+			}
 
 			// decrease level
 			this.level--;
