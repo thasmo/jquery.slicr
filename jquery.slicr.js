@@ -89,9 +89,12 @@
 
 			var plugin = this;
 
-			var ratio = slice.width() / slice.height();
 			var slices = new Array(plugin.settings.amount);
 			var values = this.getValues();
+
+			var width = slice.data('width') || slice.width();
+			var height = slice.data('height') || slice.height();
+			var ratio = slice.data('ratio') || width / height;
 
 			$.each(slices, function(index) {
 
@@ -104,13 +107,22 @@
 				if(ratio >= 1) {
 					slice.css('width', values[index] + '%');
 					slice.css('height', '100%');
+
+					slice.data('width', width * values[index] / 100);
+					slice.data('height', height);
 				}
 
 				// portrait
 				else {
 					slice.css('width', '100%');
 					slice.css('height', values[index] + '%');
+
+					slice.data('width', width);
+					slice.data('height', height * values[index] / 100);
 				}
+
+				// add more data
+				slice.data('ratio', slice.data('width') / slice.data('height'));
 
 				// assign new slice
 				slices[index] = slice;
