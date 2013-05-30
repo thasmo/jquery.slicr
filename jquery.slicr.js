@@ -54,7 +54,7 @@
 			this.settings.beforeSlicing(slice, this.level);
 
 			// get new slices
-			newSlices = plugin.getSlices(slice);
+			newSlices = plugin.getSlices(slice, plugin.settings.amount);
 
 			// call after slicing callback
 			this.settings.afterSlicing(slice, newSlices, this.level);
@@ -85,16 +85,16 @@
 		},
 
 		// calculate new slices
-		getSlices: function(slice) {
+		getSlices: function(slice, number) {
 
 			var plugin = this;
-
-			var slices = new Array(plugin.settings.amount);
-			var values = this.getValues();
 
 			var width = slice.data('width') || slice.width();
 			var height = slice.data('height') || slice.height();
 			var ratio = slice.data('ratio') || width / height;
+
+			var values = this.getValues(number);
+			var slices = new Array(number);
 
 			$.each(slices, function(index) {
 
@@ -132,10 +132,13 @@
 		},
 
 		// get values for the slicing
-		getValues: function() {
+		getValues: function(number) {
 
 			var ratio;
-			var values = new Array;
+			var values = new Array(number);
+
+			var major;
+			var minor;
 
 			switch(this.settings.algorithm) {
 
@@ -157,10 +160,23 @@
 				break;
 			}
 
-			var result = 100 / ratio;
-			var rest = 100 - result;
+			// generate values
+			$.each(values, function(index) {
 
-			values.push(result, rest);
+				total = major || 100;
+
+				major = total / ratio;
+				minor = total - major;
+
+				values[index] = minor;
+
+				if(values.length == index + 2) {
+					values[index + 1] = major;
+					return false;
+				}
+
+				return true;
+			});
 
 			return this.shuffle(values);
 		},
