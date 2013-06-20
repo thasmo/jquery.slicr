@@ -101,10 +101,10 @@
 				// create new slice
 				var slice = $(document.createElement(plugin.settings.elementName));
 				slice.addClass(plugin.settings.sliceClass);
-				slice.css('float', 'left');
 
 				// landscape
 				if(ratio >= 1) {
+					slice.css('float', (number == index + 1) ? 'right' : 'left');
 					slice.css('width', values[index] + '%');
 					slice.css('height', '100%');
 
@@ -114,6 +114,7 @@
 
 				// portrait
 				else {
+					slice.css('float', 'left');
 					slice.css('width', '100%');
 					slice.css('height', values[index] + '%');
 
